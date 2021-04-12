@@ -17,7 +17,7 @@ public class DemoCsvTest {
 		String line;
 		while ((line = br.readLine()) != null) { 
 		    // use xx as separator 
-		    String[] cols = line.split(","); 
+		    String[] cols = line.split(";"); 
 		    System.out.println(cols[0]); 
 		    //pCardNumber = cols[0];
 		}
