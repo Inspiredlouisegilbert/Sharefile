@@ -51,6 +51,30 @@ public class SeleniumFunctions {
 	public void createTest(String sName) {
 		extReports.createTest(sName);
 	}
+	
+	// Reusable method to perform validations for us
+	public void doValidation (String sActualValue, String sExpectedValue) {
+		
+		// Output to Console and Extent Report
+		if (sActualValue.contentEquals(sExpectedValue)) {
+			// If condition is true, execute this code
+			// output to console
+			System.out.println("Test passed. Expected Value = " + sExpectedValue + " Actual Value = " + sActualValue);
+			
+			// output to extent Reports
+			extReports.logPass(sActualValue, sExpectedValue);
+			
+		}
+		else {
+			// If condition is false, execute this code
+			System.out.println("Test failed. Expected Value = " + sExpectedValue + " Actual Value = " + sActualValue);
+			
+			// output to extent Reports
+			extReports.logFail(sActualValue, sExpectedValue);
+		}
+
+	}
+	
 
 	// Get for chromedriver
 	public WebDriver getDriver() {
@@ -75,12 +99,12 @@ public class SeleniumFunctions {
 		WebElement selectedoption = sDrpDown.getFirstSelectedOption();
 		String sActualValue = selectedoption.getText();
 		String sExpectedValue = pValue;
-		//this.reports.doValidtions(sActualValue, sExpectedValue);
+		this.doValidation(sActualValue, sExpectedValue);
 	}
 	
 	public void updateReport (String sActualValue, String sExpectedValue) {
 		
-		//this.reports.doValidtions(sActualValue, sExpectedValue);
+		this.doValidation(sActualValue, sExpectedValue);
 	}
 	
 	// function to populate an input field using multiple By clauses
@@ -94,7 +118,7 @@ public class SeleniumFunctions {
 		// set the value for ExpectedValue 
 		String sExpectedValue = inputValue;
 		
-		//this.reports.doValidtions(sExpectedValue, sActualValue);
+		this.doValidation(sExpectedValue, sActualValue);
 		
 	}
 	
@@ -115,8 +139,7 @@ public class SeleniumFunctions {
 		this.extReports.logScreenshot(this.driver);
 	}
 	
-	
-	
+
 	public void CloseSelenium() {
 		//this.reports.FinaliseExtentReport();
 		////driver.close will close the original browser window

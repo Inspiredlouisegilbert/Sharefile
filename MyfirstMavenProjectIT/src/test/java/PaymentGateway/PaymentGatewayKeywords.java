@@ -223,7 +223,7 @@ public class PaymentGatewayKeywords {
 	
 	public void runTestAlert () throws IOException, InterruptedException {
 
-		
+		sfSelenium.createTest("Run Test: demo alerts");
 		// Input test Data
 		String pQuantity = "9";
 		// Enter an invalid card number
@@ -266,6 +266,7 @@ public class PaymentGatewayKeywords {
 	
 	public void runTestToolTip () throws IOException, InterruptedException {
 		
+		sfSelenium.createTest("Run Test: Tool tips");
 		// Input test Data
 		String pQuantity = "9";
 		String pCardNumber = "";
@@ -305,6 +306,7 @@ public class PaymentGatewayKeywords {
 	
 	public void runTestReadFromFile () throws IOException, InterruptedException {
 
+		sfSelenium.createTest("Run Test: Read From File");
 		// Input test Data
 		String pQuantity = "3";
 		String pCardNumber = "";
@@ -339,10 +341,9 @@ public class PaymentGatewayKeywords {
 	}
 	
 	public void cleanup () throws IOException, InterruptedException {
+		sfSelenium.createTest("Run Test: clean up");
 		// set the value for driver
 		this.driver = sfSelenium.getDriver();
-		
-		
 		sfSelenium.CloseSelenium();
 		
 	}
