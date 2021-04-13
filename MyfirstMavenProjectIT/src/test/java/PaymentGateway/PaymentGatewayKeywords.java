@@ -257,10 +257,14 @@ public class PaymentGatewayKeywords {
 		//Thread.sleep(5000);
 		Thread.sleep(5000);
 		alert.accept();
+
 		sfSelenium.updateReport(sAlertMessage,pBogusMessage);
 		sfSelenium.updateReport(sAlertMessage,pExpectedMessage);
 		
 		Thread.sleep(5000);
+		
+		// 3 April task 1:
+		// instead of accepting the alert please dismiss it
 		
 		//sfSelenium.CloseSelenium();
 	}
@@ -323,9 +327,14 @@ public class PaymentGatewayKeywords {
 		    String[] cols = line.split(";"); 
 		    System.out.println(cols[0]); 
 		    pCardNumber = cols[0];
-		    pCVV = cols[1];
-		    pExpMonth = cols[2];
-		    pExpYear = cols[3];
+
+		    
+		    // 3 April task 2:
+		    // Populate the following variables from the csv file
+		    //pCVV = ??
+		    //pExpMonth = ??
+		    //pExpYear = ??
+		    
 			navigateToURL(pURL);
 			
 			clickPaymentGateway();
