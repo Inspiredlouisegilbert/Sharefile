@@ -11,7 +11,7 @@ import frameworkclasses.SeleniumFunctions;
 
 public class PaymentGatewayKeywords {
 	
-// Selenium Functions 
+	// Selenium Functions 
 	SeleniumFunctions sfSelenium = new SeleniumFunctions();
 	// driver variable
 	WebDriver driver;
