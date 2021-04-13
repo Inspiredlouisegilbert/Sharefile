@@ -43,7 +43,8 @@ public class ExtentReportClass {
 		
 		// Create the location and filename for the html report
 		this.htmlReporter = new ExtentHtmlReporter(System.getProperty("user.dir") + "//test-output//ExtentReport" + generateDateTimeStamp() + ".html");
-		
+		// LG: This takes the timestamp out of the file name 
+		//this.htmlReporter = new ExtentHtmlReporter(System.getProperty("user.dir") + "//test-output//ExtentReport"+ ".html");
 		// Add HTMLReporter to the extent report instance
 		this.extent.attachReporter(this.htmlReporter);
 		
