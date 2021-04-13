@@ -74,18 +74,16 @@ public class PaymentGatewayKeywords {
 	public void clickGenerateCardNumber() throws IOException {
 		// click buy now
 		sfSelenium.clickLink("Generate Card Number");
-			
+		// Switch focus to tab next/new tab/ browser winder
+		sfSelenium.switchTab(1);
 		//take a screen shot
 		sfSelenium.logScreenShot();
-			
+			//Test comment
 		}
 	
 	// Get the payment details
 	public void getCreditCardDetails() throws IOException {
 		//// Get Card Number
-		//// Switch focus to tab next/new tab/ browser winder
-		sfSelenium.switchTab(1);
-		
 		//// Credit Card Number
 		//getCreditCardDetail(3,16);
 		//// CSS for the generated card number
