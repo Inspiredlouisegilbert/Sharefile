@@ -40,7 +40,7 @@ public class PaymentGatewayKeywords {
 	
 	// click buy now
 	public void clickBuyNow() {
-		driver.findElement(By.xpath("//input[@value='Buy Now']")).click();
+		this.driver.findElement(By.xpath("//input[@value='Buy Now']")).click();
 	}
 	
 	// capture the payment details
@@ -67,7 +67,7 @@ public class PaymentGatewayKeywords {
 	public void clickPay( ) throws IOException {
 
 		// Capture Payment Detail - Click Pay
-		driver.findElement(By.name("submit")).click();
+		this.driver.findElement(By.name("submit")).click();
 	}
 	
 	// Go to the card generate
@@ -91,7 +91,7 @@ public class PaymentGatewayKeywords {
 		//// CSS for the generated card number
 		String cssCreditCardNumber = "body.subpage:nth-child(2) section.wrapper:nth-child(3) div.inner > h4:nth-child(3)";
 		//// Get the credit card number
-		String sCreditCardNumber = driver.findElement(By.cssSelector(cssCreditCardNumber)).getText();
+		String sCreditCardNumber = this.driver.findElement(By.cssSelector(cssCreditCardNumber)).getText();
 		//// Print the sCreditCardNumber to view it
 	    System.out.println(sCreditCardNumber);
 	    //// Get the last 16 digits
@@ -100,7 +100,7 @@ public class PaymentGatewayKeywords {
 	    //// CSS for the generated cvv number
 	    String cssCvv = "body.subpage:nth-child(2) section.wrapper:nth-child(3) div.inner > h4:nth-child(4)";
 	    //// Get the CVV number
-	    String sCvv = driver.findElement(By.cssSelector(cssCvv)).getText();
+	    String sCvv = this.driver.findElement(By.cssSelector(cssCvv)).getText();
 	    //// Print the CVV to view it
 	    System.out.println(sCvv);
 	    //// Get the last 3 digits
@@ -109,7 +109,7 @@ public class PaymentGatewayKeywords {
 	    //// Year
 	    String cssYear = "body.subpage:nth-child(2) section.wrapper:nth-child(3) div.inner > h4:nth-child(5)";
 	    //// Get the YEAR
-	    String sYear = driver.findElement(By.cssSelector(cssYear)).getText();
+	    String sYear = this.driver.findElement(By.cssSelector(cssYear)).getText();
 	    //// Print the YEAR to view it
 	    System.out.println(sYear);
 	    //// Get the last xx digits
@@ -118,7 +118,7 @@ public class PaymentGatewayKeywords {
 	    //// Month
 	    String cssMonth = "body.subpage:nth-child(2) section.wrapper:nth-child(3) div.inner > h4:nth-child(5)";
 	    //// Get the Month
-	    String sMonth = driver.findElement(By.cssSelector(cssMonth)).getText();
+	    String sMonth = this.driver.findElement(By.cssSelector(cssMonth)).getText();
 	    //// Print the Month to view it
 	    System.out.println(sMonth);
 	    //// Get the last xx digits
@@ -140,9 +140,9 @@ public class PaymentGatewayKeywords {
 	 	sfSelenium.logScreenShot();
 	 		
 	 	//// Capture Payment Detail - Click Pay
-	 	driver.findElement(By.name("submit")).click();
+	 	this.driver.findElement(By.name("submit")).click();
 		
-		driver.findElement(By.xpath("//h2[contains(text(),'Payment successfull!')]"));
+		this.driver.findElement(By.xpath("//h2[contains(text(),'Payment successfull!')]"));
 		
 	}
 	
@@ -150,7 +150,7 @@ public class PaymentGatewayKeywords {
 		//// CSS for the field
 		String cssOfField = "body.subpage:nth-child(2) section.wrapper:nth-child(3) div.inner > h4:nth-child(" + iChildField + ")";
 		//// Get the field value
-		String sFieldValue = driver.findElement(By.cssSelector(cssOfField)).getText();
+		String sFieldValue = this.driver.findElement(By.cssSelector(cssOfField)).getText();
 	    //// Get the last digits
 		String sStrippedFieldValue = sfSelenium.getLastDigits(igetLastDigits, sFieldValue);
 	    return sStrippedFieldValue;
@@ -250,7 +250,8 @@ public class PaymentGatewayKeywords {
 		clickPay();
 
 		//Create an object of the alert
-		Alert alert = driver.switchTo().alert();
+		Alert alert = this.driver.switchTo().alert();
+		
 		String sAlertMessage = alert.getText();
 		System.out.println(sAlertMessage);
 		//Thread.sleep(5000);
@@ -293,7 +294,7 @@ public class PaymentGatewayKeywords {
 		clickPay();
 
 		//Create an object of the alert
-		Alert alert = driver.switchTo().alert();
+		Alert alert = this.driver.switchTo().alert();
 		String sAlertMessage = alert.getText();
 		System.out.println(sAlertMessage);
 		//Thread.sleep(5000);
