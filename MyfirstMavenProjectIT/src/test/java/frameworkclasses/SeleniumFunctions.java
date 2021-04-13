@@ -11,11 +11,14 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
 
+import frameworkclasses.ExtentReportClass;
+
 
 // This class manages all Selenium Functions and the Driver
 public class SeleniumFunctions {
 	// Class Private Variables
 	private  WebDriver driver;
+	ExtentReportClass extReports = new ExtentReportClass();
 	
 	//private ReportingClass reports = new ReportingClass();
 	
@@ -39,6 +42,14 @@ public class SeleniumFunctions {
 		// Create an instance of ChromeDriver to execute our tests
 		 this.driver = new ChromeDriver();	
 
+	}
+	
+	public void startReport(String sReportName, String sTitle) {
+		extReports.startReport(sReportName, sTitle);
+	}
+	
+	public void createTest(String sName) {
+		extReports.createTest(sName);
 	}
 
 	// Get for chromedriver
@@ -101,8 +112,9 @@ public class SeleniumFunctions {
 	
 	
 	public void logScreenShot() throws IOException {
-		//this.reports.logScreenshot(this.driver);
+		this.extReports.logScreenshot(this.driver);
 	}
+	
 	
 	
 	public void CloseSelenium() {
@@ -111,6 +123,8 @@ public class SeleniumFunctions {
 		//this.driver.close();
 		////driver.quit will close the original and all subsequent browser tabs
 		this.driver.quit();
+		// Also finalise and close the test report for us
+		extReports.closeReport();
 	}
 	
 	// Switch between tabs
