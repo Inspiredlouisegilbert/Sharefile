@@ -180,6 +180,10 @@ public class SeleniumFunctions {
 	public void switchTab(int pTagIndex) {
 		//Hold all the window handles in an array list
 		ArrayList<String> newTb = new ArrayList<String>(driver.getWindowHandles());
+		if (pTagIndex < 0) {
+			
+			pTagIndex = newTb.size() - 1;
+		}
 		driver.switchTo().window(newTb.get(pTagIndex));
 	}
 	
