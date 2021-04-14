@@ -56,6 +56,7 @@ public class SeleniumFunctions {
 		}
 		//System.out.println(p.getProperty("driverdir"));
 		//System.out.println(p.getProperty("gatewayurl"));
+
 		System.setProperty("webdriver.chrome.driver", p.getProperty("driverdir")); 
 		//System.setProperty("webdriver.chrome.driver", p.getProperty("driverdir"));
 		// For Mac
@@ -66,9 +67,9 @@ public class SeleniumFunctions {
 
 		// Create an instance of ChromeDriver to execute our tests
 		 this.driver = new ChromeDriver();	
-		
 	}
 	
+
 	public void startReport(String sReportName, String sTitle) {
 		extReports.startReport(sReportName, sTitle);
 	}
