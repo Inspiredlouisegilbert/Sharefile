@@ -349,7 +349,7 @@ public class PaymentGatewayKeywords {
 		BufferedReader br = new BufferedReader(new FileReader(csvdir)); 
 		String line;
 		while ((line = br.readLine()) != null) { 
-		    // use xx as separator 
+		    // use xx as separator.
 		    String[] cols = line.split(";"); 
 		    System.out.println(cols[0]); 
 		    pCardNumber = cols[0];
