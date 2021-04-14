@@ -36,7 +36,8 @@ public class PaymentGatewayKeywords {
 		sfSelenium.maximiseBrowserWindow();
 	}
 	
-	public String getProperties(String sPropertyName) {
+
+	public String getProperties(String pPropertyKey) {
 		// Properties setup
 				Properties p = new Properties();
 				InputStream is = null;
@@ -52,7 +53,7 @@ public class PaymentGatewayKeywords {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-		return p.getProperty(sPropertyName);
+		return p.getProperty(pPropertyKey);
 	}
 	
 
@@ -362,9 +363,7 @@ public class PaymentGatewayKeywords {
 		String pExpYear = "";
 		String pCVV = "";
 		String csvdir = getProperties("csvdir"); 
-		
-		
-		
+				
 		BufferedReader br = new BufferedReader(new FileReader(csvdir)); 
 		String line;
 		while ((line = br.readLine()) != null) { 
