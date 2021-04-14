@@ -32,6 +32,26 @@ public class PaymentGatewayKeywords {
 		sfSelenium.maximiseBrowserWindow();
 	}
 	
+	public String getProperties() {
+		// Properties setup
+				Properties p = new Properties();
+				InputStream is = null;
+				try {
+					is = new FileInputStream("dataConfig.properties");
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				try {
+					p.load(is);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		return p.getProperty("csvdir");
+	}
+	
+
 	
 	// Click on Payment Gateway Link
 	public void clickPaymentGateway() {
@@ -322,9 +342,10 @@ public class PaymentGatewayKeywords {
 		String pExpMonth = "";
 		String pExpYear = "";
 		String pCVV = "";
+		String csvdir = getProperties(); 
 		
-
-		BufferedReader br = new BufferedReader(new FileReader("C:\\tmp\\creditCard.csv")); 
+		
+		BufferedReader br = new BufferedReader(new FileReader(csvdir)); 
 		String line;
 		while ((line = br.readLine()) != null) { 
 		    // use xx as separator 

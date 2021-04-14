@@ -66,9 +66,7 @@ public class SeleniumFunctions {
 
 		// Create an instance of ChromeDriver to execute our tests
 		 this.driver = new ChromeDriver();	
-		 
-		//return gatewayurl;
-
+		
 	}
 	
 	public void startReport(String sReportName, String sTitle) {
