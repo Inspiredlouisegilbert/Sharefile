@@ -102,7 +102,8 @@ public class PaymentGatewayKeywords {
 	public void clickGenerateCardNumber() throws IOException {
 		// click buy now
 		sfSelenium.clickLink("Generate Card Number");
-			
+		// Switch focus to tab next/new tab/ browser window
+		sfSelenium.switchTab(1);	
 		//take a screen shot
 		sfSelenium.logScreenShot();
 			
