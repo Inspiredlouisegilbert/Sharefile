@@ -35,8 +35,11 @@ public class Demo14April {
 		while ((line = br.readLine()) != null) { 
 		    // use xx as separator 
 		    String[] cols = line.split(";"); 
-		    System.out.println(cols[0]); 
-		    //pCardNumber = cols[0];
+		    System.out.println("first column " + cols[0]+ " second column " + cols[1]); 
+		    String firstColumn = cols[0];
+		    String secondColumn = cols[1];
+		    
+		    
 		}
 
 	}

@@ -1,5 +1,7 @@
 package PaymentGateway;
 
+
+import java.util.List;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -11,6 +13,8 @@ import java.util.Properties;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
 
 import frameworkclasses.SeleniumFunctions;
 
@@ -32,7 +36,7 @@ public class PaymentGatewayKeywords {
 		sfSelenium.maximiseBrowserWindow();
 	}
 	
-	public String getProperties() {
+	public String getProperties(String sPropertyName) {
 		// Properties setup
 				Properties p = new Properties();
 				InputStream is = null;
@@ -48,7 +52,7 @@ public class PaymentGatewayKeywords {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-		return p.getProperty("csvdir");
+		return p.getProperty(sPropertyName);
 	}
 	
 
@@ -173,6 +177,8 @@ public class PaymentGatewayKeywords {
 		
 		this.driver.findElement(By.xpath("//h2[contains(text(),'Payment successfull!')]"));
 		
+		
+		
 	}
 	
 	public String getCreditCardDetail(int iChildField,int igetLastDigits) throws IOException {
@@ -243,11 +249,23 @@ public class PaymentGatewayKeywords {
 		
 		capturePaymentDetails(pCardNumber, pExpMonth, pExpYear, pCVV);
 		clickPay();
-	
-		
+			
 		Thread.sleep(5000);
 		
-		//sfSelenium.CloseSelenium();
+		String tablexpath = "//table/tbody";
+		WebElement TogetRows = driver.findElement(By.xpath(tablexpath));
+		List<WebElement>TotalRowsList = TogetRows.findElements(By.tagName("tr"));
+		System.out.println("Total number of Rows in the table are : "+ TotalRowsList.size());
+		
+		WebElement ToGetColumns = driver.findElement(By.xpath(tablexpath));
+		List<WebElement> TotalColsList = ToGetColumns.findElements(By.tagName("td"));
+
+		System.out.println("Total Number of cells/columns in the table are: "+TotalColsList.size());
+		
+		String firstCell = "//tbody/tr[1]/td[1]";
+		System.out.println(driver.findElement(By.xpath(firstCell)).getText());
+		
+
 	}
 	
 	public void runTestAlert () throws IOException, InterruptedException {
@@ -343,30 +361,34 @@ public class PaymentGatewayKeywords {
 		String pExpMonth = "";
 		String pExpYear = "";
 		String pCVV = "";
-		String csvdir = getProperties(); 
+		String csvdir = getProperties("csvdir"); 
+		
 		
 		
 		BufferedReader br = new BufferedReader(new FileReader(csvdir)); 
 		String line;
 		while ((line = br.readLine()) != null) { 
+			if(line.length() > 0) {
 		    // use xx as separator.
-		    String[] cols = line.split(";"); 
-		    System.out.println(cols[0]); 
-		    pCardNumber = cols[0];
-		    pCVV = cols[1];
-		    pExpMonth = cols[2];
-		    pExpYear = cols[3];
-			navigateToURL(pURL);
-			
-			clickPaymentGateway();
-			
-			selectQuantity(pQuantity);
-			
-			clickBuyNow();
-			
-		    capturePaymentDetails(pCardNumber, pExpMonth, pExpYear, pCVV);
+			    String[] cols = line.split(";"); 
+			    System.out.println(cols[0]); 
+			    pCardNumber = cols[0];
+			    pCVV = cols[1];
+			    pExpMonth = cols[2];
+			    pExpYear = cols[3];
+				navigateToURL(pURL);
+				
+				clickPaymentGateway();
+				
+				selectQuantity(pQuantity);
+				
+				clickBuyNow();
+				
+			    capturePaymentDetails(pCardNumber, pExpMonth, pExpYear, pCVV);
+			    
+			    clickPay();   
+			}
 		    
-		    clickPay();    
 		} 
 		
 	}
@@ -377,9 +399,11 @@ public class PaymentGatewayKeywords {
 		this.driver = sfSelenium.getDriver();
 		sfSelenium.CloseSelenium();
 		
+		
 	}
 
 	
 }
+
 
 
