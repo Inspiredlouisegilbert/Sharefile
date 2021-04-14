@@ -191,7 +191,7 @@ public class SeleniumFunctions {
 	
 	// Get first Digits
 	public String getFirstDigits(int iFirstDigits, String pStringName) {
-		String sFirstdigits = pStringName.substring(0,2);
+		String sFirstdigits = pStringName.substring(0,iFirstDigits);
 	    System.out.println(sFirstdigits);
 	    return sFirstdigits;
 	}
