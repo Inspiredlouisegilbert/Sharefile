@@ -17,7 +17,7 @@ public class PaymentGatewayMain {
 		//pgKeywords.runTestAlert();
 		pgKeywords.runTestReadFromFile();
 		pgKeywords.cleanup();
-		// hey conflict
+		// Demo conflict branch
 	}
 
 }
