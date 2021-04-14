@@ -1,8 +1,13 @@
 package PaymentGateway;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -11,11 +16,14 @@ import frameworkclasses.SeleniumFunctions;
 
 public class PaymentGatewayKeywords {
 	
-// Selenium Functions 
+	// Selenium Functions 
 	SeleniumFunctions sfSelenium = new SeleniumFunctions();
+	
 	// driver variable
 	WebDriver driver;
 	// Set URL
+	
+	
 	String pURL = "http://demo.guru99.com";
 	
 	// Navigate to demo.guru99.com

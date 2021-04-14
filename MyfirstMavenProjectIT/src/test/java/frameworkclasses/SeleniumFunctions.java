@@ -1,7 +1,11 @@
 package frameworkclasses;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Properties;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
@@ -19,12 +23,13 @@ public class SeleniumFunctions {
 	// Class Private Variables
 	private  WebDriver driver;
 	ExtentReportClass extReports = new ExtentReportClass();
+	public String gatewayurl;
 	
 	//private ReportingClass reports = new ReportingClass();
 	
 	
 	// Constructor
-	public SeleniumFunctions() {
+	public SeleniumFunctions()  {
 		
 		// Tell Java where the chromedriver.exe sits & Create a new instance of Chrome Driver
 		SetupSelenium();
@@ -33,14 +38,36 @@ public class SeleniumFunctions {
 
 	public void SetupSelenium() {
 		
+		
+		// Properties setup
+		Properties p = new Properties();
+		InputStream is = null;
+		try {
+			is = new FileInputStream("dataConfig.properties");
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			p.load(is);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//System.out.println(p.getProperty("driverdir"));
+		//System.out.println(p.getProperty("gatewayurl"));
+		System.setProperty("webdriver.chrome.driver", p.getProperty("driverdir")); 
+		//System.setProperty("webdriver.chrome.driver", p.getProperty("driverdir"));
 		// For Mac
 		//System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
 		
 		// For Window
-				System.setProperty("webdriver.chrome.driver", "c:\\chromedriver_win32\\chromedriver.exe"); 
+				//System.setProperty("webdriver.chrome.driver", "c:\\chromedriver_win32\\chromedriver.exe"); 
 
 		// Create an instance of ChromeDriver to execute our tests
 		 this.driver = new ChromeDriver();	
+		 
+		//return gatewayurl;
 
 	}
 	
