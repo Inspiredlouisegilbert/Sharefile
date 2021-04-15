@@ -269,6 +269,56 @@ public class PaymentGatewayKeywords {
 
 	}
 	
+	public void clickCheckCreditCardLimit() {
+		sfSelenium.clickLink("Check Credit Card Limit");
+	}
+	
+	public void captureDetails( String pCredNo) throws IOException {
+		// Capture Card Number
+		sfSelenium.populateInputField(By.name("card_nmuber"), pCredNo);
+	}
+	
+	public void clickSubmit() {
+		this.driver.findElement(By.xpath("//input[@value='submit']")).click();
+	}
+	
+	public void runNewTestAlert() throws IOException, InterruptedException {
+
+		sfSelenium.createTest("Run Test: demo alerts");
+
+		// Enter an invalid card number
+		String pCardNumber = "5154";
+		String pBogusMessage = "sfdgsdfsdgf";
+		String pExpectedMessage = "Check card number is 16 digits!";
+		// End of - Input Test Data
+		
+		// Keywords
+		navigateToURL(pURL);
+		
+		clickPaymentGateway();
+		
+		clickCheckCreditCardLimit();
+		
+		captureDetails(pCardNumber);
+		
+		clickSubmit();
+		
+		//clickGenerateCardNumber();
+		
+		//Create an object of the alert
+		Alert alert = this.driver.switchTo().alert();
+		
+		String sAlertMessage = alert.getText();
+		System.out.println(sAlertMessage);
+		//Thread.sleep(5000);
+		Thread.sleep(500);
+		alert.accept();
+		sfSelenium.updateReport(sAlertMessage,pBogusMessage);
+		sfSelenium.updateReport(sAlertMessage,pExpectedMessage);
+		
+		Thread.sleep(500);
+	}
+	
 	public void runTestAlert () throws IOException, InterruptedException {
 
 		sfSelenium.createTest("Run Test: demo alerts");
