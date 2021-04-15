@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-public class Demo14April {
+public class DemoReadFromCSV {
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
