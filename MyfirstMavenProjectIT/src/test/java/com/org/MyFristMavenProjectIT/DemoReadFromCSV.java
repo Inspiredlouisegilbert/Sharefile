@@ -34,12 +34,13 @@ public class DemoReadFromCSV {
 		String line;
 		while ((line = br.readLine()) != null) { 
 		    // use xx as separator 
-		    String[] cols = line.split(";"); 
-		    System.out.println("first column " + cols[0]+ " second column " + cols[1]); 
+		    // Task change the delimiter to a ,
+			// assign a variable to each field value
+			System.out.println(line);
+			
+			String[] cols = line.split(";"); 
 		    String firstColumn = cols[0];
-		    String secondColumn = cols[1];
-		    
-		    
+		    System.out.println(firstColumn);
 		}
 
 	}
