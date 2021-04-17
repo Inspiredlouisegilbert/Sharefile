@@ -13,7 +13,8 @@ public class DemoCsvTest {
 	public void testCSV() throws IOException {
 		// TODO Auto-generated method stub
 		
-		BufferedReader br = new BufferedReader(new FileReader("C:\\tmp\\creditCard.csv")); 
+		BufferedReader br = new BufferedReader(new FileReader("/usr/local/bin/creditCard.csv")); 	//MAC
+		//BufferedReader br = new BufferedReader(new FileReader("C:\\tmp\\creditCard.csv")); 		//WINDOWS
 		String line;
 		while ((line = br.readLine()) != null) { 
 		    // use xx as separator 

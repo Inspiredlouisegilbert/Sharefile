@@ -1,2 +1,2 @@
-driverdir=c:\\chromedriver_win32\\chromedriver.exe
-csvdir=C:\\tmp\\creditCard.csv
+driverdir=/usr/local/bin/chromedriver
+csvdir=/usr/local/bin/creditCard.csv

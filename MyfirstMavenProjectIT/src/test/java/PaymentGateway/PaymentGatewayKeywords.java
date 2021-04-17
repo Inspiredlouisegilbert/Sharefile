@@ -304,7 +304,7 @@ public class PaymentGatewayKeywords {
 		System.out.println(sAlertMessage);
 		//Thread.sleep(5000);
 		Thread.sleep(500);
-		alert.accept();
+		alert.accept(); //
 		sfSelenium.updateReport(sAlertMessage,pBogusMessage);
 		sfSelenium.updateReport(sAlertMessage,pExpectedMessage);
 		
@@ -393,6 +393,7 @@ public class PaymentGatewayKeywords {
 	
 	public void runTestReadFromFile () throws IOException, InterruptedException {
 
+		//READ DATA FROM THE CREDITCARD.CSV FILE AND USE THOSE AS INPIT PARAMETERS FOR THE CREDIT CARD, CSV AND DATES
 		sfSelenium.createTest("Run Test: Read From File");
 		// Input test Data
 		String pQuantity = "3";
@@ -424,10 +425,8 @@ public class PaymentGatewayKeywords {
 			    capturePaymentDetails(pCardNumber, pExpMonth, pExpYear, pCVV);
 			    
 			    clickPay();   
-			}
-		    
-		} 
-		
+			}  
+		} 	
 	}
 	
 	public void cleanup () throws IOException, InterruptedException {
@@ -436,11 +435,5 @@ public class PaymentGatewayKeywords {
 		this.driver = sfSelenium.getDriver();
 		sfSelenium.CloseSelenium();
 		
-		
 	}
-
-	
 }
-
-
-
