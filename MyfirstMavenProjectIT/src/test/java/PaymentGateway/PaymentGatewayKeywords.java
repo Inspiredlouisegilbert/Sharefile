@@ -14,7 +14,8 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import frameworkclasses.SeleniumFunctions;
 
@@ -22,6 +23,9 @@ public class PaymentGatewayKeywords {
 	
 	// Selenium Functions 
 	SeleniumFunctions sfSelenium = new SeleniumFunctions();
+	
+	// Setup waits
+	WebDriverWait wait;
 	
 	// driver variable
 	WebDriver driver;
@@ -252,8 +256,9 @@ public class PaymentGatewayKeywords {
 		clickPay();
 			
 		Thread.sleep(5000);
-		
 		String tablexpath = "//table/tbody";
+		
+		
 		WebElement TogetRows = driver.findElement(By.xpath(tablexpath));
 		List<WebElement>TotalRowsList = TogetRows.findElements(By.tagName("tr"));
 		System.out.println("Total number of Rows in the table are : "+ TotalRowsList.size());
@@ -303,9 +308,10 @@ public class PaymentGatewayKeywords {
 		
 		clickSubmit();
 		
-		//clickGenerateCardNumber();
+		// explicit wait for the alert to appear
+		this.wait.until(ExpectedConditions.alertIsPresent());
 		
-		//Create an object of the alert
+		// create an object of the alert
 		Alert alert = this.driver.switchTo().alert();
 		
 		String sAlertMessage = alert.getText();
