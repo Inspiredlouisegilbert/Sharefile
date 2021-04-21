@@ -9,12 +9,12 @@ public class TablesDemoMain {
 		// TODO Auto-generated method stub
 		// Create an instance of the PaymentGatewayKeywords class
 		
-		TablesDemoKeywords pgKeywords = new TablesDemoKeywords();
+		TablesDemoKeywords tbKeywords = new TablesDemoKeywords();
 		
 		// call runTest
-		pgKeywords.runTestStart();
-		pgKeywords.tabless();
-		pgKeywords.cleanup();
+		tbKeywords.runTestStart();
+		tbKeywords.tabless();
+		tbKeywords.cleanup();
 		//
 		
 	}
