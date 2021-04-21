@@ -1,11 +1,21 @@
 package PaymentGateway;
 
+
+import java.util.List;
 import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import frameworkclasses.SeleniumFunctions;
 
@@ -13,9 +23,15 @@ public class PaymentGatewayKeywords {
 	
 	// Selenium Functions 
 	SeleniumFunctions sfSelenium = new SeleniumFunctions();
+	
+	// Setup waits
+	WebDriverWait wait;
+	
 	// driver variable
 	WebDriver driver;
 	// Set URL
+	
+	
 	String pURL = "http://demo.guru99.com";
 	
 	// Navigate to demo.guru99.com
@@ -24,6 +40,27 @@ public class PaymentGatewayKeywords {
 		sfSelenium.maximiseBrowserWindow();
 	}
 	
+
+	public String getProperties(String pPropertyKey) {
+		// Properties setup
+				Properties p = new Properties();
+				InputStream is = null;
+				try {
+					is = new FileInputStream("dataConfig.properties");
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				try {
+					p.load(is);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		return p.getProperty(pPropertyKey);
+	}
+	
+
 	
 	// Click on Payment Gateway Link
 	public void clickPaymentGateway() {
@@ -142,6 +179,8 @@ public class PaymentGatewayKeywords {
 		
 		this.driver.findElement(By.xpath("//h2[contains(text(),'Payment successfull!')]"));
 		
+		
+		
 	}
 	
 	public String getCreditCardDetail(int iChildField,int igetLastDigits) throws IOException {
@@ -212,11 +251,75 @@ public class PaymentGatewayKeywords {
 		
 		capturePaymentDetails(pCardNumber, pExpMonth, pExpYear, pCVV);
 		clickPay();
-	
-		
+			
 		Thread.sleep(5000);
+		String tablexpath = "//table/tbody";
 		
-		//sfSelenium.CloseSelenium();
+		
+		WebElement TogetRows = driver.findElement(By.xpath(tablexpath));
+		List<WebElement>TotalRowsList = TogetRows.findElements(By.tagName("tr"));
+		System.out.println("Total number of Rows in the table are : "+ TotalRowsList.size());
+		
+		WebElement ToGetColumns = driver.findElement(By.xpath(tablexpath));
+		List<WebElement> TotalColsList = ToGetColumns.findElements(By.tagName("td"));
+
+		System.out.println("Total Number of cells/columns in the table are: "+TotalColsList.size());
+		
+		String firstCell = "//tbody/tr[1]/td[1]";
+		System.out.println(driver.findElement(By.xpath(firstCell)).getText());
+		
+
+	}
+	
+	public void clickCheckCreditCardLimit() {
+		sfSelenium.clickLink("Check Credit Card Limit");
+	}
+	
+	public void captureDetails( String pCredNo) throws IOException {
+		// Capture Card Number
+		sfSelenium.populateInputField(By.name("card_nmuber"), pCredNo);
+	}
+	
+	public void clickSubmit() {
+		this.driver.findElement(By.xpath("//input[@value='submit']")).click();
+	}
+	
+	public void runNewTestAlert() throws IOException, InterruptedException {
+
+		sfSelenium.createTest("Run Test: demo alerts");
+
+		// Enter an invalid card number
+		String pCardNumber = "5154";
+		String pBogusMessage = "sfdgsdfsdgf";
+		String pExpectedMessage = "Check card number is 16 digits!";
+		// End of - Input Test Data
+		
+		// Keywords
+		navigateToURL(pURL);
+		
+		clickPaymentGateway();
+		
+		clickCheckCreditCardLimit();
+		
+		captureDetails(pCardNumber);
+		
+		clickSubmit();
+		
+		// explicit wait for the alert to appear
+		this.wait.until(ExpectedConditions.alertIsPresent());
+		
+		// create an object of the alert
+		Alert alert = this.driver.switchTo().alert();
+		
+		String sAlertMessage = alert.getText();
+		System.out.println(sAlertMessage);
+		//Thread.sleep(5000);
+		Thread.sleep(500);
+		alert.accept();
+		sfSelenium.updateReport(sAlertMessage,pBogusMessage);
+		sfSelenium.updateReport(sAlertMessage,pExpectedMessage);
+		
+		Thread.sleep(500);
 	}
 	
 	public void runTestAlert () throws IOException, InterruptedException {
@@ -225,7 +328,7 @@ public class PaymentGatewayKeywords {
 		// Input test Data
 		String pQuantity = "9";
 		// Enter an invalid card number
-		String pCardNumber = "111";
+		String pCardNumber = "134665";
 		String pExpMonth = "06";
 		String pExpYear = "2024";
 		String pCVV = "333";
@@ -253,19 +356,87 @@ public class PaymentGatewayKeywords {
 		String sAlertMessage = alert.getText();
 		System.out.println(sAlertMessage);
 		//Thread.sleep(5000);
-		Thread.sleep(5000);
+		Thread.sleep(500);
 		alert.accept();
 
 		sfSelenium.updateReport(sAlertMessage,pBogusMessage);
 		sfSelenium.updateReport(sAlertMessage,pExpectedMessage);
 		
-		Thread.sleep(5000);
+		Thread.sleep(500);
 		
 		// 3 April task 1:
 		// instead of accepting the alert please dismiss it
 		
 		//sfSelenium.CloseSelenium();
 	}
+	
+//	public void runMyTestAlert () throws IOException, InterruptedException {
+//
+//		sfSelenium.createTest("Run Test: My Test alert");
+//		// Input test Data
+//		// Enter an invalid card number
+//		String pCardNumber = "5454";
+//		String pBogusMessage = "sfdgsdfsdgf";
+//		String pExpectedMessage = "Check card number is 16 digits!";
+//		// End of - Input Test Data
+//		
+//		// Keywords
+//		navigateToURL(pURL);
+//		
+//		clickPaymentGateway();
+//		
+//		this.driver.findElement(By.linkText("Check Credit Card Limit")).click();		
+//		
+//		sfSelenium.switchTab(-1);
+//		
+//		sfSelenium.populateInputField(By.id("card_nmuber"), pCardNumber);
+//		
+//		this.driver.findElement(By.name("submit")).click();
+//
+//		//Create an object of the alert
+//		Alert alert = this.driver.switchTo().alert();
+//		
+//		String sAlertMessage = alert.getText();
+//		System.out.println(sAlertMessage);
+//		Thread.sleep(500);
+//		alert.accept();
+//		sfSelenium.updateReport(sAlertMessage,pBogusMessage);
+//		sfSelenium.updateReport(sAlertMessage,pExpectedMessage);
+//		
+//		Thread.sleep(500);
+//		
+//		//sfSelenium.CloseSelenium();
+//	}
+//	
+	
+	public void creditlimt() throws InterruptedException {
+	
+	String pBogusMessage = "sfdgsdfsdgf";
+	String pExpectedMessage = "Check card number is 16 digits!";
+	String pCardNumber="1234";
+	navigateToURL(pURL);
+	
+	clickPaymentGateway();
+	
+  this.driver.findElement(By.linkText("Check Credit Card Limit")).click();	
+  
+  sfSelenium.populateInputField(By.id("card_nmuber"), pCardNumber);
+  
+ this.driver.findElement(By.name("submit")).click();
+ 
+	Alert alert = this.driver.switchTo().alert();
+	
+	String sAlertMessage = alert.getText();
+	System.out.println(sAlertMessage);
+	
+	Thread.sleep(500);
+	alert.accept();
+	sfSelenium.updateReport(sAlertMessage,pBogusMessage);
+	sfSelenium.updateReport(sAlertMessage,pExpectedMessage);
+	
+	Thread.sleep(500);
+}
+	
 	
 	public void runTestToolTip () throws IOException, InterruptedException {
 		
@@ -316,34 +487,34 @@ public class PaymentGatewayKeywords {
 		String pExpMonth = "";
 		String pExpYear = "";
 		String pCVV = "";
-		
-
-		BufferedReader br = new BufferedReader(new FileReader("C:\\tmp\\creditCard.csv")); 
+		String csvdir = getProperties("csvdir"); 
+				
+		BufferedReader br = new BufferedReader(new FileReader(csvdir)); 
 		String line;
 		while ((line = br.readLine()) != null) { 
-		    // use xx as separator 
-		    String[] cols = line.split(";"); 
-		    System.out.println(cols[0]); 
-		    pCardNumber = cols[0];
+
+			if(line.length() > 0) {
+		    // use xx as separator.
+			    String[] cols = line.split(";"); 
+			    System.out.println(cols[0]); 
+			    pCardNumber = cols[0];
+			    pCVV = cols[1];
+			    pExpMonth = cols[2];
+			    pExpYear = cols[3];
+				navigateToURL(pURL);
+				
+				clickPaymentGateway();
+				
+				selectQuantity(pQuantity);
+				
+				clickBuyNow();
+				
+			    capturePaymentDetails(pCardNumber, pExpMonth, pExpYear, pCVV);
+			    
+			    clickPay();   
+			}
 
 		    
-		    // 3 April task 2:
-		    // Populate the following variables from the csv file
-		    //pCVV = ??
-		    //pExpMonth = ??
-		    //pExpYear = ??
-		    
-			navigateToURL(pURL);
-			
-			clickPaymentGateway();
-			
-			selectQuantity(pQuantity);
-			
-			clickBuyNow();
-			
-		    capturePaymentDetails(pCardNumber, pExpMonth, pExpYear, pCVV);
-		    
-		    clickPay();    
 		} 
 		
 	}
@@ -354,9 +525,11 @@ public class PaymentGatewayKeywords {
 		this.driver = sfSelenium.getDriver();
 		sfSelenium.CloseSelenium();
 		
+		
 	}
 
 	
 }
+
 
 

@@ -1,8 +1,17 @@
 package frameworkclasses;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
+import java.rmi.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
+import org.bson.Document;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -10,8 +19,19 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
-
 import frameworkclasses.ExtentReportClass;
+
+// Mongo DB imports
+import com.mongodb.MongoClient;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
+import com.mongodb.DBObject;
+import com.mongodb.Mongo;
+import com.mongodb.DB;
+
 
 
 // This class manages all Selenium Functions and the Driver
@@ -19,12 +39,13 @@ public class SeleniumFunctions {
 	// Class Private Variables
 	private  WebDriver driver;
 	ExtentReportClass extReports = new ExtentReportClass();
+	public String gatewayurl;
 	
 	//private ReportingClass reports = new ReportingClass();
 	
 	
 	// Constructor
-	public SeleniumFunctions() {
+	public SeleniumFunctions()  {
 		
 		// Tell Java where the chromedriver.exe sits & Create a new instance of Chrome Driver
 		SetupSelenium();
@@ -33,17 +54,34 @@ public class SeleniumFunctions {
 
 	public void SetupSelenium() {
 		
-		// For Mac
-		//System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
 		
-		// For Window
-				System.setProperty("webdriver.chrome.driver", "c:\\chromedriver_win32\\chromedriver.exe"); 
+		// Properties setup
+		Properties p = new Properties();
+		InputStream is = null;
+		try {
+			is = new FileInputStream("dataConfig.properties");
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			p.load(is);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+
+		System.setProperty("webdriver.chrome.driver", p.getProperty("driverdir")); 
 
 		// Create an instance of ChromeDriver to execute our tests
 		 this.driver = new ChromeDriver();	
-
+		 
+		 // set the implicit wait
+		 this.driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	}
 	
+
 	public void startReport(String sReportName, String sTitle) {
 		extReports.startReport(sReportName, sTitle);
 	}
@@ -96,7 +134,7 @@ public class SeleniumFunctions {
 		// Populates the Dropdown
 		sDrpDown.selectByVisibleText(pValue);
 		
-		WebElement selectedoption = sDrpDown.getFirstSelectedOption();
+		WebElement selectedoption = sDrpDown.getFirstSelectedOption(); 
 		String sActualValue = selectedoption.getText();
 		String sExpectedValue = pValue;
 		this.doValidation(sActualValue, sExpectedValue);
@@ -154,6 +192,10 @@ public class SeleniumFunctions {
 	public void switchTab(int pTagIndex) {
 		//Hold all the window handles in an array list
 		ArrayList<String> newTb = new ArrayList<String>(driver.getWindowHandles());
+		if (pTagIndex < 0) {
+			
+			pTagIndex = newTb.size() - 1;
+		}
 		driver.switchTo().window(newTb.get(pTagIndex));
 	}
 	
@@ -166,7 +208,7 @@ public class SeleniumFunctions {
 	
 	// Get first Digits
 	public String getFirstDigits(int iFirstDigits, String pStringName) {
-		String sFirstdigits = pStringName.substring(0,2);
+		String sFirstdigits = pStringName.substring(0,iFirstDigits);
 	    System.out.println(sFirstdigits);
 	    return sFirstdigits;
 	}
